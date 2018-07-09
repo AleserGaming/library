@@ -1,1 +1,42 @@
-
+unit LoKAS;
+  function GenPassword(sizePassword: integer; useSings, useBigLetters, useSmallLetters, useNumbers: boolean): string;
+  var
+    password: string;
+    i, randomnum: integer;
+    const 
+      symbols = '%*)?@#$~ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'; 
+  begin
+    while i <> sizePassword do
+    begin
+      i += 1;
+      randomnum := Random(symbols.Length + 1);
+      if randomnum = 0 then
+      begin
+        i -= 1;
+        continue;
+      end;
+      if (useSings = false) and (randomnum < 9) then
+      begin
+        i -= 1;
+        continue;
+      end;
+      if (useBigLetters = false) and (randomnum > 8) and (randomnum < 35) then
+      begin
+        i -= 1;
+        continue;
+      end;
+      if (useSmallLetters = false) and (randomnum > 34) and (randomnum < 61) then
+      begin
+        i -= 1;
+        continue;
+      end;
+      if (useNumbers = false) and (randomnum > 60) then
+      begin
+        i -= 1;
+        continue;
+      end;
+      password += symbols.Chars[randomnum];
+    end;
+    Result := password;
+  end;
+end.
